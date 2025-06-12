@@ -1,0 +1,26 @@
+services:
+  backend:
+    build: .
+    ports:
+      - "8003:8003"
+    environment:
+      # The app will connect to the 'db' service on the default postgres port
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/saveflow
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16-alpine
+    volumes:
+      # Persist database data
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=saveflow
+    ports:
+      # To connect from your local machine for debugging
+      - "5432:5432"
+
+volumes:
+  postgres_data:

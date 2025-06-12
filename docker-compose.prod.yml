@@ -1,0 +1,25 @@
+services:
+  backend:
+    build: .
+    # Use the default command from the Dockerfile, which is optimized for production.
+    # It does not use --reload.
+    ports:
+      - "8003:8003"
+    env_file:
+      - ./.env # Load environment variables from this file
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data/
+    env_file:
+      - ./.env # Load environment variables from this file
+    # The database port is not exposed to the host machine for security.
+    restart: unless-stopped
+
+volumes:
+  postgres_data_prod:
+    # Use a separate named volume for production data 
