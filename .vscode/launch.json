@@ -11,9 +11,11 @@
             "module": "uvicorn",
             "args": [
                 "app.main:app",
-                "--reload"
+                "--reload",
+                "--port",
+                "8003"
             ],
-            "cwd": "${workspaceFolder}/app",
+            "cwd": "${workspaceFolder}",
             "jinja": true,
             "envFile": "${workspaceFolder}/.env",
         }
