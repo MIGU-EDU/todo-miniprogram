@@ -12,4 +12,5 @@ dependencies = [
     "pydantic-settings>=2.0.0",
     "alembic>=1.13.0",
     "ruff>=0.11.13",
+    "greenlet>=3.2.3",
 ]
