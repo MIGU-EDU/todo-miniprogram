@@ -27,4 +27,4 @@ class Settings(BaseSettings):
 
 
 # 创建全局设置实例
-settings = Settings() 
+settings = Settings()

@@ -11,3 +11,9 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Local env files
+.env
+.env.*
+!.env.example
+
