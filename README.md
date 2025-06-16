@@ -7,6 +7,8 @@
 - ⚡ **FastAPI** - 现代、快速的 Web 框架
 - 🧰 **SQLModel** - FastAPI 作者开发的 ORM，完美集成 FastAPI 和 Pydantic
 - 💾 **PostgreSQL** - 强大的关系型数据库
+- 🔄 **Alembic** - 轻量级数据库迁移工具
+- 🐳 **Docker** - 容器化部署
 - 📚 **自动 API 文档** - Swagger UI 和 ReDoc
 - 🔧 **类型提示** - 完整的 Python 类型支持
 - 🎯 **CRUD 操作** - 完整的增删改查功能
@@ -19,48 +21,80 @@ saveflow-backend/
 │   ├── api/
 │   │   ├── routes/
 │   │   │   ├── __init__.py
-│   │   │   └── todos.py          # 待办事项路由
+│   │   │   └── todos.py        # 待办事项路由
 │   │   └── __init__.py
 │   ├── core/
-│   │   ├── config.py             # 应用配置
-│   │   └── database.py           # 数据库配置
+│   │   ├── config.py           # 应用配置
+│   │   └── database.py         # 数据库配置
 │   ├── models/
-│   │   └── todo.py               # 数据模型
+│   │   └── todo.py             # 数据模型
+│   ├── alembic/                # Alembic 迁移脚本
+│   │   └── versions/
 │   ├── __init__.py
-│   └── main.py                   # FastAPI 应用
-├── pyproject.toml               # 项目配置和依赖
-├── .env                         # 环境变量（需要创建）
+│   └── main.py                 # FastAPI 应用
+├── alembic.ini                 # Alembic 配置文件
+├── docker-compose.yml          # Docker 开发环境配置
+├── Dockerfile                  # 应用 Dockerfile
+├── pyproject.toml              # 项目配置和依赖
+├── .env                        # 环境变量（需要创建）
 └── README.md
 ```
 
 ## 🔧 安装和设置
 
-### 1. 安装依赖
+### 1. 克隆项目
 
-使用 UV 包管理器（推荐）：
 ```bash
-uv sync
+git clone <repository-url>
+cd saveflow-backend
 ```
 
 ### 2. 环境配置
 
-创建 `.env` 文件，配置你的数据库连接：
+创建 `.env` 文件，复制 `.env.example` (如果存在) 或使用以下内容：
+
 ```env
 # 数据库配置
-DATABASE_URL=postgresql+asyncpg://postgres:password@localhost:5432/saveflow_todos
+# 如果使用 docker-compose 启动，请使用下面的配置
+DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/saveflow
+
+# 如果在本地直接运行应用 (不通过 docker)
+# DATABASE_URL=postgresql+asyncpg://postgres:postgres@localhost:5432/saveflow
 
 # 应用配置
 DEBUG=True
 ```
 
-### 3. 数据库设置
+### 3. 启动应用 (使用 Docker)
 
-确保 PostgreSQL 服务运行，并创建数据库：
-```sql
-CREATE DATABASE saveflow_todos;
+这是推荐的启动方式，可以一键启动应用和数据库。
+
+```bash
+docker compose up -d
 ```
 
-### 4. 启动应用
+应用将在 `http://localhost:8003` 启动。
+
+### 4. 数据库迁移 (Alembic)
+
+当你修改了 `app/models/` 中的数据模型后，你需要创建新的迁移脚本并应用它。
+
+**1. 创建迁移脚本** (在 backend 容器内执行)
+
+```bash
+# 进入 backend 容器
+docker compose exec backend bash
+
+# 创建迁移脚本 (在容器内)
+alembic revision --autogenerate -m "Some description of the change"
+
+# 退出容器
+exit
+```
+
+**2. 应用数据库迁移**
+
+当有新的迁移脚本时，`docker compose up` 会自动应用迁移。如果需要手动应用：
 
 ```bash
 docker compose up -d db # 启动数据库
@@ -102,11 +136,11 @@ fastapi dev app/main.py --port 8003 # 启动应用
 }
 ```
 
-## 🧪 测试示例
+## 🧪 测试示例 (使用 cURL)
 
 ### 创建待办事项
 ```bash
-curl -X POST "http://localhost:8000/api/v1/todos/" \
+curl -X POST "http://localhost:8003/api/v1/todos/" \
      -H "Content-Type: application/json" \
      -d '{
        "title": "学习 SQLModel",
@@ -117,7 +151,7 @@ curl -X POST "http://localhost:8000/api/v1/todos/" \
 
 ### 获取待办事项列表
 ```bash
-curl "http://localhost:8000/api/v1/todos/"
+curl "http://localhost:8003/api/v1/todos/"
 ```
 
 ## 🛠️ 技术栈
@@ -125,10 +159,14 @@ curl "http://localhost:8000/api/v1/todos/"
 - **FastAPI**: 现代 Python Web 框架
 - **SQLModel**: 类型安全的 ORM，集成 SQLAlchemy 和 Pydantic
 - **PostgreSQL**: 关系型数据库
+- **Alembic**: 数据库迁移
+- **Docker & Docker Compose**: 容器化
 - **Uvicorn**: ASGI 服务器
+- **UV**: Python 包管理器
 
 ## 📖 参考资料
 
 - [FastAPI 官方文档](https://fastapi.tiangolo.com/)
 - [SQLModel 官方文档](https://sqlmodel.tiangolo.com/)
+- [Alembic 官方文档](https://alembic.sqlalchemy.org/)
 - [FastAPI 官方全栈模板](https://github.com/fastapi/full-stack-fastapi-template)
