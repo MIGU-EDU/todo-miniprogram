@@ -4,6 +4,8 @@ import logging
 
 from fastapi import Depends
 from sqlmodel import SQLModel
+# 导入所有模型以确保它们被注册
+from app.models import User, Todo
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.orm import sessionmaker

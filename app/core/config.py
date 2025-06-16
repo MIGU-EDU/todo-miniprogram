@@ -8,6 +8,10 @@ class Settings(BaseSettings):
     secret_key: str = Field(default="your-secret-key-here", alias="SECRET_KEY")
     environment: str = Field(default="development", alias="ENVIRONMENT")
     
+    # 微信小程序配置
+    wechat_app_id: str = Field(default="", alias="WECHAT_APP_ID")
+    wechat_app_secret: str = Field(default="", alias="WECHAT_APP_SECRET")
+    
     # 数据库配置 - 使用 PostgreSQL
     database_url: str = Field(
         default="postgresql+asyncpg://postgres:postgres@localhost:5432/saveflow",
