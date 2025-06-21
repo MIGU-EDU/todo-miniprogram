@@ -26,7 +26,7 @@ App({
       console.error('登录失败:', error)
       // 登录失败后，可以选择重试或显示错误提示
       setTimeout(() => {
-        this.doLogin() // 3秒后重试
+        this.doLogin()
       }, 3000)
     }
   },
