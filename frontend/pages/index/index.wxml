@@ -1,0 +1,54 @@
+<view class="">
+  <van-cell-group>
+    <van-field
+      value="{{value}}"
+      placeholder="请填写待办事项"
+      border="{{false}}"
+      use-button-slot
+      bind:change="onChange"
+    >
+      <van-button slot="button" size="small" type="primary" disabled="{{disabled}}" bind:tap="add" icon="plus" round></van-button>
+    </van-field>
+  </van-cell-group>
+
+  <!-- 提示文字 -->
+  <view class="page-footer">
+    添加完事项后请左划选择完成或删除
+  </view>
+
+  <!-- 待办事项列表 -->
+  <view class="todo">
+    <van-swipe-cell wx:for="{{todo}}" wx:key="index" right-width="{{120}}">
+      <van-cell-group>
+        <!-- 显示待办事项内容，根据状态添加删除线样式 -->
+        <van-cell 
+          title="{{item.title}}" 
+          style="{{item.completed ? 'text-decoration: line-through red; text-decoration-thickness: 2px; color: #999;' : ''}}"
+        />
+      </van-cell-group>
+      
+      <!-- 右滑操作按钮 -->
+      <view slot="right">
+        <!-- 完成按钮 -->
+        <van-button 
+          type="primary" 
+          square="{{true}}" 
+          bind:tap="completeTodo" 
+          data-index="{{index}}"
+        >
+          完成
+        </van-button>
+        
+        <!-- 删除按钮 -->
+        <van-button 
+          type="danger" 
+          square="{{true}}" 
+          bind:tap="deleteTodo" 
+          data-index="{{index}}"
+        >
+          删除
+        </van-button>
+      </view>
+    </van-swipe-cell>
+  </view>
+</view>

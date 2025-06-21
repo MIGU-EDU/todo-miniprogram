@@ -1,0 +1,28 @@
+/**index.wxss**/
+page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.todo {
+  margin-top: 20rpx;
+}
+
+.del {
+  height: 100%;
+  color: white;
+  padding: 16rpx;
+  font-size: 26rpx;
+  background-color: red;
+}
+
+.page-footer {
+  color: rgb(161, 157, 157); /* 深灰色文字 */
+  font-size: 24rpx;
+  margin: 20rpx 0;
+  text-align: center; /* 文字居中 */
+}
+
+
+

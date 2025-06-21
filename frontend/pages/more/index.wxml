@@ -1,0 +1,76 @@
+<view class="container">
+<!-- 定义 WXS 模块 -->
+<wxs module="tools">
+  function getFirstChar(str) {
+    return str ? str.substring(0, 1) : '';
+  }
+  module.exports = {
+    getFirstChar: getFirstChar
+  }
+</wxs>
+
+  <!-- 介绍卡片 -->
+  <view class="card">
+    <view class="card-header">
+      <view class="icon-wrapper">
+        <van-icon name="like" color="red" size="22px" />
+      </view>
+      <text class="card-title">我们的产品</text>
+    </view>
+    
+    <view class="card-content">
+      <text class="description">在繁忙的生活迷宫中，SaveFlow 是那根不会断裂的阿里阿德涅线。它以清单为梭，编织秩序之网，守护您珍贵的心流时光，让每个待办事项都找到归途。</text>
+      
+      <view class="tags">
+        <view class="tag">清单管理</view>
+        <view class="tag">时间规划</view>
+        <view class="tag">高效执行</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 团队卡片 -->
+  <view class="card">
+    <view class="card-header">
+      <view class="icon-wrapper">
+        <van-icon name="friends" size="22px" color="#33bbff" />
+      </view>
+      <text class="card-title">开发团队</text>
+    </view>
+    
+    <view class="team-list">
+      <view class="team-member" wx:for="{{teamMembers}}" wx:key="index">
+        <view class="avatar">
+          <text class="avatar-text">  {{tools.getFirstChar(item.name)}}</text>
+        </view>
+        <view class="member-info">
+          <text class="member-name">{{item.name}}</text>
+          <text class="member-role">{{item.role}}</text>
+          <text class="member-skills">{{item.skills}}</text>
+        </view>
+      </view>
+
+      <view class="divider"></view>
+      
+      <view class="team-member">
+        <view class="avatar">
+          <text class="avatar-text">王</text>
+        </view>
+        <view class="member-info">
+          <text class="member-name">王超</text>
+          <text class="member-role">指导老师</text>
+          <text class="member-skills">教授 · 导师</text>
+        </view>
+      </view>
+    </view>
+    
+    <view class="thank-you">
+      <text>感谢您使用我们的产品 ❤️</text>
+    </view>
+  </view>
+  
+  <!-- 版本信息 -->
+  <view class="version">
+    <text>版本 1.0.0 · 2025年6月</text>
+  </view>
+</view>

@@ -17,9 +17,9 @@
                 "--port",
                 "8003"
             ],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/backend",
             "jinja": true,
-            "envFile": "${workspaceFolder}/.env",
+            "envFile": "${workspaceFolder}/backend/.env",
         }
     ]
 }
