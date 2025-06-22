@@ -81,17 +81,15 @@ Page({
   },
 
   // 删除待办事项
-  deleteTodo(e) {
+  async deleteTodo(e) {
     const index = e.currentTarget.dataset.index;
-    const newTodoList = [...this.data.todo];
-    
-    // 移除指定下标的待办事项
-    newTodoList.splice(index, 1);
-    
-    this.setData({
-      todo: newTodoList
-    });
-
-    // wx.setStorageSync('todo', this.data.todo)
+    const id = this.data.todo[index].id
+    try {
+      await delTodo({ todo_id: id})
+      // 刷新待办事项列表
+      this.loadTodos()
+    } catch (err) {
+      console.log('删除待办事项失败:', err)
+    }
   }
 });

@@ -20,8 +20,7 @@ export const updateStatus = (params) => {
 export const delTodo = (params) => {
   return wxRequest.delete(
     config.apiBaseUrl,
-    '/api/v1/todos/',
-    params
+    `/api/v1/todos/${params.todo_id}`,
   )
 }
 
