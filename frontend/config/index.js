@@ -9,7 +9,7 @@ if (env === "dev") {
 } else {
   // 生产环境
   config = {
-    apiBaseUrl:'https://todo.miguyouke.com',
+    apiBaseUrl:'https://www.todo.miguyouke.com',
   }
 }
 
